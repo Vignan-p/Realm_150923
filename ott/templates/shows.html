@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shows</title>
+<style>
+  body {
+    background-color: black;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+
+  .heading {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orangered;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    width: 100%;
+  }
+
+  .box {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    background-color: rgba(80, 77, 77, 0.3);
+    transition: background-color 0.3s;
+  }
+
+  .box:hover {
+    background-color: rgba(80, 77, 77, 0.6);
+  }
+
+  .box::before {
+    content: "Coming Soon";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: rgba(143, 137, 137, 0.7);
+    pointer-events: none;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s;
+    z-index: index 2;
+  }
+
+  .box:hover::before {
+    color: white;
+    opacity: 1;
+  }
+  .box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(2px); /* Apply the blur effect */
+    transition: filter 0.3s;
+    z-index: 1;
+  }
+
+  .box:hover img {
+    filter: blur(10px); /* Reduce blur on hover */
+  }
+
+
+  .paragraph {
+    margin-top: 50px;
+    width: 70%;
+    text-align: center;
+    color: rgb(255, 77, 0);
+  }
+</style>
+</head>
+<body>
+  <a href="{% url 'home' %}" >
+  <img src="{% static 'logo/logo.png' %}" alt="Logo" style="position: absolute; top: 10px; left: 10px; width: 100px; height: auto;">
+  </a>
+  <h1 class="heading">Shows</h1>
+  <div class="container">
+    <div class="box"><img src="https://images-cdn.ubuy.co.in/6351347fdfec8169b11cbb57-peaky-blinders-poster-season-1-key-art.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://wallpapercave.com/wp/wp8840621.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://wallpaperaccess.com/full/1268942.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://static.displate.com/1200x857/displate/2022-06-01/d45c30759431a68846acca42987466e2_c830748a127d5c5c17a9f5ad2c76ada5.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://e0.pxfuel.com/wallpapers/181/890/desktop-wallpaper-game-of-thrones-got-poster-phone-background-iphone-got-got7-gameofthrones-daener-game-of-thrones-poster-game-of-throne-actors-game-of-thrones-art-game-of-thrones-cast-thumbnail.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://wallpapercave.com/wp/wp6794247.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://c4.wallpaperflare.com/wallpaper/853/336/948/stranger-things-eleven-colorful-tv-wallpaper-preview.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://cdn.wallpapersafari.com/54/99/UmZ1pR.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    <div class="box"><img src="https://www.teahub.io/photos/full/4-40863_friends-wallpapers-for-pc-friends-tv-show.jpg"alt=" Image"style="width:250px ;height: 250px;"></div>
+    
+  </div>
+  <p class="paragraph">
+   <b>The shows are unavailable right now. Keep an eye out for updates.</b></p>
+</body>
+</html>

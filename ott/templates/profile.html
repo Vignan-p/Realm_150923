@@ -1,0 +1,352 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% csrf_token %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    /* styles.css */
+    /* Reset default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .profile-photo-container {
+      position: relative;
+    }
+
+    .lock-icon {
+      position: absolute;
+      top: -5px;
+      right: 2px;
+      font-size: 30px;
+      color: whitesmoke;
+    }
+
+    /* Set global font and background colors */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: whitesmoke;
+    }
+
+    /* Container for profile cards */
+    .profile-container {
+      display: flex;
+      flex-wrap: wrap; /* Allow profiles to wrap to the next line */
+      justify-content: center; /* Center profiles horizontally */
+      align-items: center; /* Center profiles vertically */
+      padding: 20px;
+      gap: 20px;
+    }
+   
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-info {
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    /* Profile card */
+    .profile {
+      flex: 0 0 auto; /* Disable profile cards from growing or shrinking */
+      width: 150px; /* Adjust the width as needed */
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center; /* Center the content */
+
+    }
+
+    .profile h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .profile-info {
+      margin-bottom: 10px;
+    }
+
+    .profile-info h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px; /* Add margin to separate name from the photo */
+    }
+
+    .profile-info img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 0 auto; /* Center the image horizontally */
+      margin-bottom: 10px; /* Add margin below the photo */
+    }
+
+    .default-photo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 130px;
+      height: 130px;
+      background-color: #e9e9e9;
+      border-radius: 50%;
+      font-size: 40px;
+      color: #888888;
+      margin: 0 auto; /* Center the default photo horizontally */
+      margin-bottom: 10px; /* Add margin below the default photo */
+    }
+
+    .default-photo .lock-icon {
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      font-size: 30px;
+  
+    }
+
+    .additional-profiles {
+      display: flex; /* Display profiles in a row */
+      gap: 40px;
+      justify-content: center; /* Center the profiles horizontally */
+      align-items: center; /* Center the profiles vertically */
+    }
+
+    .add-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .add-profile-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4c96d7;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-profile-link:hover {
+      background-color: #327bb5;
+    }
+
+    #add {
+      border-radius: 100%;
+      width: 200px;
+      margin-top: 30px;
+      margin-left: 45px;
+    }
+
+    .editbutton {
+      width: 60px;
+      margin-left: 85px;
+      margin-top: 20px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center; /* Center the button horizontally */
+      margin-top: 20px;
+    }
+
+    #add {
+      width: 120px;
+      margin-bottom: 80px;
+      border-radius: 80%;
+      border: 2px solid rgb(115, 106, 106);
+      width: 130px;
+      margin-bottom: 100px;
+    }
+
+    #quote {
+      font-weight: bold;
+      
+    }
+
+    .navbar {
+      background-color: black;
+      width: 100%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: flex-start;
+      height: 80px;
+    }
+
+    .navbar-brand {
+      padding: 5px;
+      margin-right: 10px;
+    }
+
+    .navbar-brand img {
+      width: 135px;
+      height: 68px;
+      margin-left: -10px;
+      margin-top: -10px;
+    }
+
+    .editbutton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 30px;
+      margin: 0 auto;
+      margin-top: 20px;
+      padding: 8px 15px;
+      background-color: orangered;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .editbutton:hover {
+      background-color: orange;
+    }
+  </style>
+  <script>
+    function showMaxProfilesPopup() {
+      $('#maxProfilesModal').modal('show');
+    }
+  </script>
+
+
+  <nav class="navbar navbar-expand-lg">
+    <a href="#" class="navbar-brand">
+      <img
+        src="{% static 'logo/logo.png'%}"
+        width="120px"
+        height="40px"
+        alt="Logo"
+      />
+    </a>
+    <div class="ml-auto">
+      <a href="{% url 'logout' %}" class="btn" style="background-color: orangered; color: white;">Logout</a>
+    </div>
+  </nav>
+</head>
+<body>
+
+
+  <h1 class="text-center" id="quote" style="margin-top:100px;">
+    Choose your profile and dive in
+  </h1>
+  {% load static %}
+
+  {% block content %}
+  <div class="profile-container" style="margin-left: -150px;">
+    <div class="profile">
+      <div class="profile-info">
+
+      </div>
+    </div>
+
+    <div class="additional-profiles">
+      {% for profile in profiles %}
+      <div class="profile">
+          <div class="profile-info">
+              {% if profile.photo %}
+              <div class="profile-photo-container">
+                  {% if profile.pin %}
+                  <a href="{% url 'unlock_pin' %}?profile_name={{ profile.name }}">
+                      <img src="{{ profile.photo.url }}" alt="Profile Photo">
+                      <i class="fas fa-lock fa-2x lock-icon" style="color:whitesmoke;"></i>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'select_profile' profile.name %}">
+                      <img src="{{ profile.photo.url }}" alt="Profile Photo">
+                  </a>
+                  {% endif %}
+              </div>
+              {% else %}
+              {% if profile.pin %}
+              <div class="default-photo">
+                  <a href="{% url 'unlock_pin' %}?profile_name={{ profile.name }}">
+                      <img src="{% if profile.child_profile == 0 %}https://icons.veryicon.com/png/o/internet--web/web-interface-flat/6606-male-user.png{% else %}https://img.freepik.com/premium-vector/laughing-boy-avatar-funny-kid-profile-picture_176411-3537.jpg{% endif %}" alt="Default Photo">
+                      <i class="fas fa-lock fa-2x lock-icon" style="color:orangered;"></i>
+                  </a>
+              </div>
+              {% else %}
+              <div class="default-photo">
+                  <a href="{% url 'select_profile' profile.name %}">
+                      <img src="{% if profile.child_profile == 0 %}https://icons.veryicon.com/png/o/internet--web/web-interface-flat/6606-male-user.png{% else %}https://img.freepik.com/premium-vector/laughing-boy-avatar-funny-kid-profile-picture_176411-3537.jpg{% endif %}" alt="Default Photo">
+                  </a>
+              </div>
+              {% endif %}
+              {% endif %}
+              <a href="{% url 'select_profile' profile.name %}" id="pname" style="color: orangered; text-decoration: none;">
+                  <h4 style="margin-left: 7px;">{{ profile.name }}</h4>
+              </a>
+  
+              {% if profile.pin %}
+              <a href="{% url 'unlock' %}?profile_name={{ profile.name }}" style="margin-left: 30px; text-decoration: none;" class="editbutton">
+                  <h4 style="margin-bottom: 5px; text-decoration: none;">Edit</h4>
+              </a>
+              {% else %}
+              <a href="{% url 'edit_profile' profile.id %}" style="margin-left: 30px; text-decoration: none;" class="editbutton">
+                  <h4 style="margin-bottom: 5px; text-decoration: none;">Edit</h4>
+              </a>
+              {% endif %}
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+  
+  
+    
+
+  
+
+    <div class="profile add-profile">
+      <div class="profile-item">
+        {% if profiles|length >= 4 %}
+        <a href="#" onclick="showMaxProfilesPopup()">
+          <img id="add" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU_Rvoa06OWPqQxDh2rORnARqIqYmq3rOrR9UZZa6HBg&usqp=CAU&ec=48665701" alt="Add Profile">
+        </a>
+        {% else %}
+        <a href="{% url 'add_profile' %}">
+          <img id="add" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU_Rvoa06OWPqQxDh2rORnARqIqYmq3rOrR9UZZa6HBg&usqp=CAU&ec=48665701" alt="Add Profile">
+        </a>
+        {% endif %}     
+      </div>
+    </div>
+    {% endblock %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="maxProfilesModal" tabindex="-1" role="dialog" aria-labelledby="maxProfilesModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content  text-white" style="background-color: #c90000" >
+          <div class="modal-header">
+            <h5 class="modal-title" id="maxProfilesModalLabel">Maximum Profiles Reached</h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="font-weight: 900; font-size: 1.2em;background-color: black;border-radius: 60%;">&times;</span>
+
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>Only 4 profiles are allowed</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

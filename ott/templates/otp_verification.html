@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>otp verification</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+        crossorigin="anonymous" />
+    <!-- CSS -->
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-image: url('https://media.istockphoto.com/id/1461370352/photo/hacker-anonymous-and-face-mask-with-smartphone-in-hand-man-in-black-hood-shirt-holding-and.webp?b=1&s=170667a&w=0&k=20&c=193lnDnhX3jGTtmLyDxFWKDnwgk87X3l1xF0SBvjewE=');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .otp-field {
+            display: flex;
+        }
+
+        .otp-field input {
+            width: 24px;
+            font-size: 32px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 2px;
+            border: 2px solid #55525c;
+            background: #21232d;
+            font-weight: bold;
+            color: #fff;
+            outline: none;
+            transition: all 0.1s;
+            -moz-appearance: textfield; /* Remove increment and decrement arrows in Firefox */
+            -webkit-appearance: none; /* Remove increment and decrement arrows in Chrome, Safari, Edge */
+        }
+
+        .otp-field input::-webkit-inner-spin-button,
+        .otp-field input::-webkit-outer-spin-button {
+            -webkit-appearance: none; /* Remove increment and decrement arrows in Chrome, Safari, Edge */
+            margin: 0; /* Remove inner padding and outer margin in Chrome, Safari, Edge */
+        }
+
+        .otp-field input:focus {
+            border: 2px solid darkorange;
+            box-shadow: 0 0 2px 2px darkorange;
+        }
+
+        .space {
+            margin-right: 1rem !important;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        p {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: orangered;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color:orangered;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .navbar {
+            background-color:black;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+        }
+        .logo{
+            width: 135px;
+            height: 68px;
+        }
+    </style>
+    <title>OTP</title>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'logo/logo.png'%}" alt="Logo" class="logo">
+          </a>
+    </nav>
+</head>
+<body>
+    <form method="post" action="{% url 'otp_verification' %}">
+        {% csrf_token %}
+        <h2 class="text-dark">ENTER OTP SENT TO {{ mobile_number }}</h2>
+        {% if error_message %}
+        <p class="error-message" style="margin-left: 120px;">{{ error_message }}</p>
+        {% endif %}
+        <div class="otp-field">
+            <input type="number" name="otp1" maxlength="1" required style="margin-left: 50px;" />
+            <input type="number" name="otp2" maxlength="1" required />
+            <input class="space" type="number" name="otp3" maxlength="1" required />
+            <input type="number" name="otp4" maxlength="1" required />
+            <input type="number" name="otp5" maxlength="1" required />
+            <input type="number" name="otp6" maxlength="1" required />
+        </div>
+        <button type="submit" style="margin-left: 150px;">Submit</button>
+    </form>
+
+    <script>
+      const inputs = document.querySelectorAll(".otp-field input");
+    inputs.forEach((input, index) => {
+        input.dataset.index = index;
+        input.addEventListener("keyup", handleOtp);
+        input.addEventListener("paste", handleOnPasteOtp);
+    });
+
+    function handleOtp(e) {
+        const input = e.target;
+        let value = input.value;
+        let isValidInput = value.match(/[0-9a-z]/gi);
+        input.value = "";
+        input.value = isValidInput ? value[0] : "";
+        let fieldIndex = input.dataset.index;
+        if (fieldIndex < inputs.length - 1 && isValidInput) {
+            input.nextElementSibling.focus();
+        }
+        if (e.key === "Backspace" && fieldIndex > 0) {
+            input.previousElementSibling.focus();
+        }
+        if (fieldIndex == inputs.length - 1 && isValidInput) {
+            submit(); // Automatically submit the form and redirect
+        }
+    }
+
+    function handleOnPasteOtp(e) {
+        const data = e.clipboardData.getData("text");
+        const value = data.split("");
+        if (value.length === inputs.length) {
+            inputs.forEach((input, index) => (input.value = value[index]));
+            submit(); // Automatically submit the form and redirect
+        }
+    }
+
+    function submit() {
+        console.log("Submitting...");
+        let otp = "";
+        inputs.forEach((input) => {
+            otp += input.value;
+        });
+        console.log(otp);
+        // Call API or perform further actions here
+
+        // Assuming you have a URL for the home page, you can use the following line to redirect
+        window.location.href = "{% url 'profiles' %}"; // Change the URL accordingly
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>REALM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    /* Global Styles */
+
+
+  
+
+
+
+
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #000;
+      
+    }
+   
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section */
+   
+  /* Features Section */
+
+
+    /* Testimonials Section */
+    .testimonials {
+      padding: 80px 0;
+      background-color:black;
+      text-align: center;
+    }
+
+    .testimonials h2 {
+      font-size: 32px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fade-in 1s forwards;
+      color: white;
+    }
+
+    .testimonial {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: slide-up 1s forwards;
+      animation-delay: 0.3s;
+    }
+
+    .testimonial-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+
+    .testimonial-text {
+      font-size: 18px;
+      color: #777;
+    }
+
+    /* Pricing Section */
+  
+  
+
+    
+
+
+
+
+
+
+    /* Footer Section */
+    .footer {
+      padding: 40px 0;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      height: 10px;
+        
+    }
+
+    .footer p {
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: slide-up 1s forwards;
+      animation-delay: 0.3s;
+    }
+
+    /* Keyframes */
+    @keyframes slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
+       
+
+        .text {
+            width: 50%;
+            color: #fff;
+            animation: slide-in 1s ease-out forwards;
+        }
+
+       
+
+
+    
+  
+
+
+.container {
+    position: relative;
+   height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+ 
+
+  
+  .text {
+    text-align: center;
+  }
+
+  .text h1 {
+    margin-bottom: 20px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-size: 80px;
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: reveal-text 4s linear forwards;
+  }
+
+
+
+
+
+
+  .text h3 {
+    margin-bottom: 10px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+  }
+
+  #get-started {
+      display: inline-block;
+      background-color: orangered;
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer !important;
+      border: 1px solid black;
+    }
+
+    #get-started:hover {
+      background-color: orangered;
+      cursor: pointer;
+    }
+  a:hover{
+    cursor: pointer;
+  }
+
+
+  .footer p {
+    margin: 0;
+  }
+
+  .footer a {
+    color: white;
+    text-decoration: none;
+  }
+
+
+
+
+
+  .about-us {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .about-us-text {
+    flex: 1;
+    max-width: 50%;
+    color: #fff;
+  }
+
+  .about-us-text p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .about-us-img {
+    text-align: center;
+  }
+
+  .about-us-img img {
+    max-width: 600px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+  }
+
+
+  #about::first-letter{
+    color: orangered;
+    font-size: 80px;
+  }
+
+  .features {
+  padding: 80px 0;
+  background-color:black;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fade-in 1s forwards;
+  color: white;
+}
+
+.feature-list {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.feature-item {
+  flex-basis: calc(33.33% - 20px);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slide-up 1s forwards;
+  animation-delay: 0.3s;
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: #777;
+}
+
+.feature-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.feature-description {
+  color: #777;
+}
+
+.feature-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+
+#key::first-letter{
+  color: orangered;
+  font-size: 80px;
+}
+ 
+
+#what::first-letter{
+  color: orangered;
+  font-size: 80px;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+
+ 
+  <div class="container">
+    <video autoplay loop muted playsinline id="background-video" style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover;">
+        <source src="{% static 'videos/intro.mp4' %}" type="video/mp4">
+      
+        <!-- Add additional source elements for different video formats if needed -->
+    </video>
+    <div class="text" style="position: absolute; top: 56%; left: 50%; transform: translate(-50%, -50%); text-align: center; ">
+        <a href="{% url 'signup' %}" style="text-decoration: none;"><button id="get-started" style="display: none; margin-top: 20%; margin-left:40%;text-decoration: none;">Get Started</button></a>
+    </div>
+</div>
+   
+
+   
+  </div>
+   
+</div>
+
+
+
+<div class="about-us">
+  <div class="about-us-text">
+    <h1 id="about" style="font-size: 40px;">About Us</h1>
+    <p>
+      Realm OTT is a revolutionary streaming platform that offers a wide range of high-quality movies, series, and documentaries. Our platform delivers content over the internet, allowing you to enjoy your favorite shows whenever and wherever you want. Say goodbye to traditional broadcast and cable TV providers.
+    </p>
+    <p>
+      With Realm OTT, you have the freedom to personalize your streaming experience. Our advanced recommendation system tailors content suggestions based on your viewing preferences, ensuring you discover new and exciting entertainment options.
+    </p>
+    <p>
+      Whether you're at home or on the go, Realm OTT provides multi-device access, so you can stream your favorite shows on any device, be it your TV, smartphone, tablet, or computer. Enjoy seamless entertainment without any restrictions.
+    </p>
+    
+  </div>
+  <div class="about-us-img">
+    <img src="media/profile_photos/moviestreaming.gif" alt="">
+  </div>
+</div>
+
+<section class="features">
+  <h2 id="key">Key Features</h2>
+  <div class="feature-list">
+    <div class="feature-item">
+      <img class="feature-image" src="https://images.unsplash.com/photo-1525869811964-53594bfcb4b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bW9iaWxlJTIwc3RyZWFtaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Feature 1">
+      <h3 class="feature-title" style="color: white;">Mobile Streaming</h3>
+      <p class="feature-description"  style="font-weight: bold;">Stream your favorite movies and shows on any mobile device.</p>
+    </div>
+    <div class="feature-item">
+      <img class="feature-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3MN-W3WdPG7i0nwCwBGH4OrwyBCESU-9ig322tKBcTudnVbvHPVg_WL2J31AX6qn8n7k&usqp=CAU" alt="Feature 4">
+      <h3 class="feature-title" style="color: white;">Multiple Devices</h3>
+      <p class="feature-description" style="font-weight: bold;">Seamlessly switch between devices and continue watching where you left off.</p>
+    </div>
+    <div class="feature-item">
+      <img class="feature-image" src="https://cdnl.iconscout.com/lottie/premium/thumb/download-arrow-4866145-4096935.gif" alt="Feature 5">
+      <h3 class="feature-title" style="color: white; ">Offline Downloads</h3>
+      <p class="feature-description"   style="font-weight: bold;">Download your favorite content and watch it offline, even without an internet connection.</p>
+    </div>
+  
+  </div>
+</section>
+
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    
+     <b><p style="color: orangered;">&copy; 2023 Realm. All rights reserved.</p></b>
+    </div>
+  </footer>
+
+  <script>
+    const video = document.getElementById("background-video");
+        const getStartedButton = document.getElementById("get-started");
+
+        // Event listener for video pause event
+        video.addEventListener("pause", function() {
+            getStartedButton.style.display = "block";
+        });
+
+        // Pause the video after 5 seconds
+        setTimeout(function() {
+            video.pause();
+        },3895);
+  </script>
+</body>
+
+</html>

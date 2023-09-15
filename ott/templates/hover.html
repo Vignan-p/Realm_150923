@@ -1,0 +1,498 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .custom-nav {
+        background-color: #333;
+        color: #fff;
+      }
+      .custom-body {
+        background: black;
+      }
+
+      .custom-ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+
+
+      .custom-li {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+
+      .custom-a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+      }
+
+
+
+      .custom-container {
+        position: relative;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        overflow: hidden;
+        height: 85vh;
+        margin-left: -30px;
+      }
+
+      .custom-video-container {
+        position: absolute;
+        top: 20px; /* Adjust the top position to cover the top gap */
+        left: -20px; /* Adjust the left position to cover the left gap */
+        width: calc(
+          100% + 40px
+        ); /* Adjust the width to include the margin values */
+        height: calc(
+          100% + 40px
+        ); /* Adjust the height to include the margin values */
+        overflow: hidden;
+        margin: 0;
+      }
+
+
+
+
+      
+      .custom-video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin-top: 0;
+      }
+
+      .custom-thumbnail-overlay {
+        position: absolute;
+        top: -20px; /* Adjust the top position to cover the top gap */
+        left: -20px; /* Adjust the left position to cover the left gap */
+        width: calc(
+          100% + 40px
+        ); /* Adjust the width to include the margin values */
+        height: calc(
+          100% + 40px
+        ); /* Adjust the height to include the margin values */
+        background: url("{% static 'logo/project12.jpeg'%}")
+          no-repeat  center / cover;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+
+      .custom-thumbnail-overlay:hover {
+        opacity: 0;
+      }
+
+
+      .custom-video-container:hover .custom-thumbnail-overlay {
+    opacity: 0;
+  }
+   
+
+      .custom-play-button,
+      .custom-info-button {
+        font-size: 60px;
+        color: #8a7c7c;
+        cursor: pointer;
+        padding: 10px;
+        text-align: center;
+        position: absolute;
+        z-index: 3;
+        opacity: 1;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        background:rgb(241, 241, 241);
+        align-items: center;
+        margin-bottom: 10%;
+color:black;
+        font-size: 20px;
+        border-radius: 10px;
+        
+      }
+
+
+      .custom-play-button {
+        bottom: 20px;
+        left: 20px;
+        margin-left: 4%;
+        padding: 8px 12px; /* Adjust the padding */
+        width: 5%;
+
+      }
+
+      .custom-info-button {
+        bottom: 20px;
+        left: 90px;
+        margin-left: 8%;
+        padding: 8px 12px; /* Adjust the padding */
+        width: 5%;
+      }
+
+      .custom-play-button::before,
+      .custom-info-button::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(104, 101, 101, 0.8) 0%,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 0.8) 100%
+        );
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(45deg) scale(0);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: -1;
+      }
+
+      .custom-play-button:hover::before,
+      .custom-info-button:hover::before {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(45deg) scale(2);
+      }
+
+      .custom-play-button:hover,
+      .custom-info-button:hover {
+        transform: scale(1.2);
+        color: white;
+        background-color: orangered;
+      }
+
+      .custom-video-info {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        color: #fff;
+        text-align: left;
+        /* opacity: 1; */
+        z-index: 2;
+        transition: opacity 0.3s ease;
+      }
+
+      .custom-video-container:hover .custom-video-info {
+        opacity: 1;
+      }
+  
+      .custom-video-info .custom-description {
+        position: relative;
+        overflow: hidden;
+        height: auto;
+        font-weight: bold;
+        margin-left: 4%;
+        transition: height 0.3s ease;
+        width: 150%;
+        
+      }
+
+      .custom-video-container:hover .custom-video-info .custom-description {
+        height: auto;
+      }
+
+      .custom-video-info .custom-description::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 1;
+      }
+
+      .custom-video-info .custom-description:hover::before {
+        opacity: 1;
+      }
+
+      .custom-video-info .custom-description p {
+        position: relative;
+        z-index: 2;
+      }
+
+      .custom-video-info h2 {
+        font-size: 50px;
+        margin-bottom: 10px;
+        margin-left: 4%;
+        display: block; /* Display the title */
+      }
+
+      .custom-video-info p {
+        font-size: 16px;
+        max-width: 35%;
+        font-weight: bold;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      .custom-title::first-letter {
+        color: orangered;
+        font-size: 70px;
+      }
+      .custom-title {
+        font-size: 70px;
+        font-weight: bold;
+        font-family: Georgia, "Times New Roman", Times, serif;
+      }
+
+      .custom-icon {
+      position: fixed; /* Change to fixed positioning */
+      top: 50%; /* Position vertically at 50% of the viewport */
+      transform: translateY(-50%); /* Center vertically */
+      left: 10px;
+      width: 30px;
+      height: 30px;
+      z-index: 2;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+
+    .custom-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: black;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1000;
+      height: 80%;
+      font-weight: bold;
+      
+    }
+    
+    .custom-popup-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .custom-popup-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    #popup-title::first-letter{
+color: orangered;
+font-size: 100px;
+    }
+
+/* Add custom-icon-middle-right class to position the icon */
+.custom-icon-middle-right {
+      position: fixed;
+      top: 40%;
+      right: 20px;
+      transform: translateY(-50%);
+      width: 5%;
+      height: 5%;
+      z-index: 2;
+      margin-left: 90%;
+      margin-bottom: 50%;
+    
+    }
+    .custom-icon-middle-right:hover {
+      cursor: pointer;
+    }
+
+
+
+
+    .custom-icon-middle-right {
+  position: absolute; /* Use absolute positioning */
+  top: 80%; /* Center vertically */
+  right: 20px;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  z-index: 2;
+  background: transparent;
+ margin-bottom: 1000px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+ 
+  
+}
+
+.custom-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: transparent;
+  margin-bottom: 10%;
+}
+
+
+.custom-back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 4;
+      background-color: rgba(255, 255, 255, 0.5);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      color: red;
+    }
+
+
+
+    </style>
+  </head> 
+  <body>
+  
+    <div class="custom-container">
+      <div class="custom-video-container">
+        <video id="backgroundVideo" autoplay loop poster="{% static 'logo/project12.jpeg' %}" muted>
+          <source src="{% static 'videos/kalki.mp4' %}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="custom-thumbnail-overlay"></div>
+        <div class="custom-icon custom-icon-middle-right">
+          <img src="{% static 'logo/mute3.png' %}" alt="Mute Icon">
+        </div>
+       
+        <a href="{% url 'hover_player' %}?video_src=/static/videos/kalki.mp4">
+          <button class="custom-play-button">
+              &#9654;<span style="font-size: 0.5%; font-weight: 900;">Play</span>
+          </button>
+      </a>
+      
+        <div class="custom-info-button" style="font-size: 20px;font-weight: 900;" onclick="openPopup()">
+          info
+        </div>
+        <div class="custom-video-info">
+          <h2 class="custom-title"  style="margin-left: 80px;">PROJECT-K</h2>
+          <div class="custom-description">
+            <p style="margin-left: 30px;font-size: 22px;font-family:'Times New Roman', Times, serif">
+              A modern-day avatar of Vishnu, a Hindu god, who is believed to have descended to earth to protect the world from evil forces.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="custom-popup" id="popup">
+      <video autoplay loop class="custom-popup-video">
+        <source src="{% static 'videos/background_video.mp4' %}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="custom-popup-content">
+        <span class="custom-popup-close" onclick="closePopup()">&times;</span>
+        <!-- Your popup content here -->
+        <h2 id="popup-title" style="font-weight: bold;">PROJECT-K</h2>
+        <p>A modern-day avatar of Vishnu, a Hindu god, who is believed to have descended to earth to protect the world from evil forces.</p>
+        <p style="font-weight: bold;">
+          <span style="color:grey;font-weight:900;">Cast:</span> Prabhas, Deepika Padukone, Amithab Bachan, Disha Patani
+      </p>
+      <p>
+          <span style="color:grey;font-weight:900;">Genre:</span> Fantasy
+      </p>
+      </div>
+    </div>
+
+    <script>
+
+
+function openPopup() {
+      document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+    const customContainer = document.querySelector(".custom-container");
+const customVideo = customContainer.querySelector("video");
+const customVideoInfo = document.querySelector(".custom-video-info");
+const audioIcon = document.querySelector(".custom-icon-middle-right");
+
+// Function to play the video and show info when hovering
+customContainer.addEventListener("mouseenter", function () {
+  customVideo.play().catch(function (error) {
+    console.log("Video playback failed: " + error);
+  });
+  customVideoInfo.style.opacity = 1;
+});
+
+// Function to pause the video when leaving and show info
+customContainer.addEventListener("mouseleave", function () {
+  customVideo.pause();
+  customVideoInfo.style.opacity = 1;
+});
+
+// Function to toggle mute and change audio icon
+audioIcon.addEventListener("click", function () {
+  if (customVideo.muted) {
+    customVideo.muted = false;
+    audioIcon.innerHTML = `<img src="{% static 'logo/audio3.png' %}" alt="Audio Icon">`; // Change to audio icon
+  } else {
+    customVideo.muted = true;
+    audioIcon.innerHTML = `<img src="{% static 'logo/mute3.png' %}" alt="Mute Icon">`; // Change to mute icon
+  }
+});
+
+// Function to handle updating the video time when starting playback
+customVideo.addEventListener("play", function () {
+  customVideo.currentTime = customVideo.currentTime; // This line ensures the playback continues from where it left off
+});
+
+// Function to handle updating the audio icon based on initial mute state
+if (customVideo.muted) {
+  audioIcon.innerHTML = `<img src="{% static 'logo/mute3.png' %}" alt="Mute Icon">`; // Set initial mute icon
+} else {
+  audioIcon.innerHTML = `<img src="{% static 'logo/audio3.png' %}" alt="Audio Icon">`; // Set initial audio icon
+}
+
+function playBackgroundVideo() {
+            // Open the other page directly
+            window.open('hover_player.html', '_blank');
+        }
+  // Function to exit full screen mode
+  function exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+
+    </script>
+  </body>
+</html>

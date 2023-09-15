@@ -1,0 +1,363 @@
+{% load static%}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .bgimage {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url('{{ video.thumbnail.url }}');
+            background-size: cover;
+            background-color: black;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        h1 {
+            color: white;
+            font-family: "Arial", sans-serif; /* Replace with your desired font */
+            margin-top: 250px;
+            margin-left: 100px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow effect */
+            font-size: 60px;
+        }
+        p {
+            color: white;
+            font-size: 22px;
+        }
+        .subs {
+            color: orangered;
+        }
+        button {
+            width: 120px;
+            height: 40px;
+            background-color: orangered;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: darkorange;
+        }
+        :root {
+        --primary-color: #ff00ff; /* Change to your desired primary color */
+        --secondary-color: #00ffff; /* Change to your desired secondary color */
+        --background-color: #000000; /* Change to your desired background color */
+      }
+      .navbar-dark .navbar-nav .nav-link i {
+        color: white;
+      }
+
+      .navbar {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px 0;
+      }
+
+      .nav-item {
+        float: left;
+      }
+
+      .profile-icon {
+        display: block;
+        text-decoration: none;
+        color: white;
+      }
+
+      .dropdown-menu {
+        background-color: black;
+      }
+
+      .dropdown-menu li a {
+        display: flex;
+        align-items: center;
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        position: relative;
+      }
+
+      .dropdown-menu li a i {
+        margin-right: 8px;
+        color: white;
+      }
+
+      .dropdown-menu li a:hover {
+        background-color: #808080;
+      }
+
+      .dropdown-menu li a:hover i {
+        color: black;
+      }
+
+      /* Updated CSS */
+      .navbar-nav {
+        margin-right: auto;
+      }
+
+      .navbar-nav .nav-link {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+
+      .navbar-nav.ml-auto {
+        margin-right: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-nav.ml-auto .nav-item {
+        margin-left: 10px;
+      }
+
+      .search-icon {
+        color: white;
+        border: none;
+      }
+
+      .dropdown-menu {
+        background-color: black;
+        position: absolute;
+        right: 10px;
+      }
+
+      .container {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        gap: 100px 50px;
+        padding: 30px 30px;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      #success-message {
+        color: red;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 20px;
+        margin-left:0px;
+      }
+
+      
+
+    </style>
+</head>
+<body>
+    <nav
+      class="navbar navbar-expand-md text-white fixed-top"
+      style="color: white"
+    >
+      <div class="container-fluid">
+        <a href="{% url 'home' %}" class="navbar-brand">
+          <img
+            src="{% static 'logo/logo.png'%}"
+            width="120px"
+            height="40px"
+            alt="Logo"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="nav-link" style="color: white">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'movies' %}" class="nav-link" style="color: white">Movies</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" style="color: white">Shows</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'watchlist_display' %}"class="nav-link" style="color: white">WatchList</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <form class="d-flex">
+                <a
+                  href="{% url 'search' %}"
+                  class="btn search-icon"
+                  type="submit"
+                  ><i class="fas fa-search"></i
+                ></a>
+              </form>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fas fa-bell"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#"
+                class="profile-icon"
+                onmouseover="toggleDropdown()"
+                onclick="toggleDropdown()"
+              >
+                <i class="fas fa-user"></i>
+              </a>
+              <ul
+                class="dropdown-menu"
+                id="profile-dropdown"
+                onmouseover="cancelTimeout()"
+                onmouseout="resetTimeout()"
+              >
+                <li>
+                  <a href="{% url 'profiles' %}"
+                    ><i class="fas fa-user-cog"></i> Manage Profile</a
+                  >
+                </li>
+                <li>
+                  <a href="#"><i class="fas fa-heart"></i> favorites</a>
+                </li>
+                <li>
+                  <a href="{% url 'watchlist_display' %}"><i class="fas fa-plus"></i> WatchList</a>
+                </li>
+                <li>
+                  <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="bgimage">
+        <h1>{{ video.title }}</h1>
+        <div style="margin-left: 100px; width: 700px;">
+            <p>{{ video.description }}</p>
+            <!-- <p><span class="subs"><b>Starring: </b></span>{{ video.genres.name }}</p> -->
+            <p><span class="subs"><b>Genre: </b></span>{{ video.genres.name }}</p>
+
+            <a href="{% url 'player' video.id %}">
+            <button>▶ Play Now</button>
+          </a> 
+          <!-- Inside your HTML template -->
+<!-- ... your other content ... -->
+<button>
+  <a href="{% url 'add_to_watchlist' video.id %}">
+    <i class="fas fa-plus" style="font-size: 25px;"></i>
+  </a>
+</button>
+{% if success_message %}
+<div id="success-message">
+    {{ success_message }}
+</div>
+{% endif %}
+
+<div id="success-message"></div>
+
+
+<!-- ... rest of your content ... -->
+
+          
+
+        </div>
+    </div>
+    <script>
+          var dropdown = document.getElementById("profile-dropdown");
+      var timeoutId;
+
+      function toggleDropdown() {
+        if (dropdown.style.display === "block") {
+          dropdown.style.display = "none";
+        } else {
+          dropdown.style.display = "block";
+        }
+      }
+      function cancelTimeout() {
+        clearTimeout(timeoutId);
+      }
+
+      function resetTimeout() {
+        timeoutId = setTimeout(function () {
+          dropdown.style.display = "none";
+        }, 200);
+      }
+
+      var dropdown = document.getElementById("profile-dropdown");
+      var timeoutId;
+
+      function toggleDropdown() {
+          if (dropdown.style.display === "block") {
+              dropdown.style.display = "none";
+          } else {
+              dropdown.style.display = "block";
+          }
+      }
+
+      function cancelTimeout() {
+          clearTimeout(timeoutId);
+      }
+
+      function resetTimeout() {
+          timeoutId = setTimeout(function () {
+              dropdown.style.display = "none";
+          }, 200);
+      }
+      var dropdown = document.getElementById("profile-dropdown");
+      var timeoutId;
+
+      function toggleDropdown() {
+        if (dropdown.style.display === "block") {
+          dropdown.style.display = "none";
+        } else {
+          dropdown.style.display = "block";
+        }
+      }
+      function cancelTimeout() {
+        clearTimeout(timeoutId);
+      }
+
+      function resetTimeout() {
+        timeoutId = setTimeout(function () {
+          dropdown.style.display = "none";
+        }, 200);
+      }
+
+
+
+      
+        </script>
+</body>
+</html>

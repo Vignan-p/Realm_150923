@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Success</title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        h2 {
+            color: orangered;
+            margin-top: 30px;
+        }
+        
+        p {
+            color: white;
+            margin: 10px 0;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        /* Style the username */
+        p:nth-child(2) {
+            font-weight: bold;
+            color: #0078d4;
+        }
+        
+        /* Style links */
+        a {
+            color: #0078d4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        /* Add hover effect to links */
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style the username with a different color */
+       .username {
+        color: steelblue; /* Choose your desired color */
+        font-weight: bold; /* Optionally make it bold */
+}
+/* Style the team name */
+.team-name {
+    color: orangered; /* Choose your desired color */
+    font-weight: bold; /* Optionally make it bold */
+    font-size: 20px; /* Adjust the font size as needed */
+    margin-top: 20px; /* Add margin to create space between paragraphs */
+}
+
+
+        
+    </style>
+    
+    <h2>Welcome to Realm!</h2>
+    <p class="username">Dear {{ user.username }},</p>
+
+    <p>Thank you for signing up on Realm. We are excited to have you as a member of our streaming platform!</p>
+    <p>With Realm, you can discover a vast collection of movies, TV shows, and exclusive content from around the world.</p>
+    <p>If you have any questions or need assistance, feel free to contact our support team.</p>
+    <p>Enjoy your streaming experience on Realm!</p>
+    <p>Best regards,</p>
+    <p class="team-name">The Realm Team</p>
+
+</body>
+</html>

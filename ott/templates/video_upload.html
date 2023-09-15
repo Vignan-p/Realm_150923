@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .upload-form {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="file"] {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 100%;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color:orangered;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #4580a0;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+body{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #11131e;
+}
+.button{
+  position: relative;
+  height: 55px;
+  max-width: 300px;
+  width: 100%;
+  background: #7d2ae8;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+.button::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+}
+.button.progress::before{
+  animation: progress 6s ease-in-out forwards;
+}
+@keyframes progress {
+  0%{
+    left: -100%;
+  }
+  10%{
+    left: -97%;
+  }
+  20%{
+    left: -92%;
+  }
+  30%{
+    left: -82%;
+  }
+  30%{
+    left: -62%;
+  }
+  40%{
+    left: -38%;
+  }
+  50%{
+    left: -18%;
+  }
+  60%{
+    left: -14%;
+  }
+  80%{
+    left: -7%;
+  }
+  90%{
+    left: -3%;
+  }
+  100%{
+    left: 0%;
+  }
+}
+.button .text-icon{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button .text-icon i,
+.button .text-icon span{
+  position: relative;
+  color: #fff;
+  font-size: 26px;
+}
+.button .text-icon span{
+  font-size: 20px;
+  font-weight: 400;
+  margin-left: 8px;
+}
+.button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <form class="upload-form" method="POST" enctype="multipart/form-data">
+            <h1>OTT Platform</h1>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="button ">
+                <div class="text-icon">
+                    <i class="bx bx-cloud-upload"></i>
+                    <span id="upload-text">Upload File</span>
+                </div>
+              </div>
+
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+       const uploadButton = document.querySelector(".button");
+  const form = document.querySelector(".upload-form");
+  const titleInput = document.getElementById("id_title");
+  const descriptionInput = document.getElementById("id_description");
+  const fileInput = document.querySelector('input[type="file"]');
+  const text = document.getElementById("upload-text");
+
+  function checkFormFields() {
+    const title = titleInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const file = fileInput.value;
+
+    if (title !== "" && description !== "" && file !== "") {
+      uploadButton.classList.remove("disabled");
+    } else {
+      uploadButton.classList.add("disabled");
+    }
+  }
+
+  titleInput.addEventListener("input", checkFormFields);
+  descriptionInput.addEventListener("input", checkFormFields);
+  fileInput.addEventListener("change", checkFormFields);
+
+  uploadButton.onclick = () => {
+    if (!uploadButton.classList.contains("disabled")) {
+      uploadButton.classList.add("progress");
+      text.innerText = "Uploading...";
+
+      // Submit the form
+      form.submit();
+
+      setTimeout(() => {
+        uploadButton.classList.remove("progress");
+        text.innerText = "Uploaded";
+      }, 6000);
+    }
+  };
+    </script>
+</body>
+</html>

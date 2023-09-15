@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'cdnlines.html' %}
+	<style>
+		form {
+			border: 3px solid #f1f1f1;
+			padding: 20px;
+			margin: 20px;
+			max-width: 500px;
+			display: inline-block;
+			text-align: center;
+		}
+		input[type=text], input[type=password] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+			width: 100%;
+		}
+		button:hover {
+			opacity: 0.8;
+		}
+		.container {
+			padding: 16px;
+		}
+		span.psw {
+			float: right;
+			padding-top: 16px;
+		}
+		@media screen and (max-width: 300px) {
+			span.psw {
+				display: block;
+				float: none;
+			}
+			.loginbtn {
+				width: 100%;
+			}
+		}
+        #error{
+            border:1px solid black;
+            margin-left:100px;
+            width:50%;
+            background-color:#F95050;
+            color:white;
+            font-size: 13px
+        }
+	</style>
+</head>
+<body>
+    <center>
+    <form id="otpform" action="{% url 'validate' %}" method="POST" style="display: {{disotp}};">
+        {% csrf_token %}  
+		<div class="container">
+			<h3>Enter Your 6 Digit Varification Code</h3>
+			<input type="text" placeholder="Varification code" name="otp" required>
+            <input type="text" value={{otp}} name="conf_otp" hidden>
+			<button type="submit">Submit</button>
+			<button type="button"onclick="window.location.href = '/forgotpassword'">Back</button>
+            
+		</div>
+	</form>
+
+    <form name='resetform' id="reset-pass" action="{% url 'validate' %}" onsubmit="return validateForm()" method="POST" style="display:{{disreset}};">
+        {% csrf_token %}  
+		<div class="container">
+			<h2>Reset Your Password</h2>
+			<label><b>New Password</b></label>
+			<input type="password" placeholder="New Password" name="newpass" required>
+			<label><b>Confirm Password</b></label>
+			<input type="password" placeholder="Confirm Password" name="confpass" required>
+            <input type="text" value={{otp}} name="conf_otp_id" hidden>
+			<button type="submit">Submit</button>
+            
+		</div>
+	</form>
+
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        m='{{message}}';
+        swal("denied!",m,"error")
+    </script>
+    {% endif %}
+    {% endfor %}
+
+    <!--script for success pop up when client form is submitted-->
+
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        m='{{message}}';
+        swal("success",m,"success")
+    </script>
+    {% endif %}
+    {% endfor %}
+
+
+	<script>
+        function validateForm() {
+            let x = document.forms["resetform"]["newpass"].value;
+            let y = document.forms["resetform"]["confpass"].value;
+            if (x !== y) {
+              alert("New Password And Confirm Password Must Match!");
+              return false;
+            }
+            else{
+                alert("Password Successfully Changed!");
+                return true;
+            }
+          }
+	</script>
+</center>
+
+</body>
+</html>

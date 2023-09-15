@@ -1,0 +1,380 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body{
+      background-color: black;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link {
+      margin-right: 20px;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    
+    .navbar {
+      background-color: #030303;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100px;
+    }
+    
+    .navbar .search-input {
+      position: relative;
+      width: 250px;
+      height: 50px;
+      margin-top: -30px;
+      
+    }
+    
+    #myInput {
+      width: calc(100% + 5px);
+      height: 40px;
+      border-radius: 8px 8px 0 0 ;
+      padding-right: 36px;
+      border: none;
+      outline: none;
+      font-size: 18px; /* Increased font size for the placeholder */
+    }
+    
+    .voice-search-button {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      margin-top: 20px;
+    }
+    .voice-search-button {
+      background-color: transparent;
+      border:10px ;
+      outline: 100px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      
+    } 
+
+    .no-results {
+      text-align: center;
+      font-weight: italicbold;
+      color: rgba(255, 0, 0, 0.952);
+      margin-top: 30px;
+      display: none;
+    }
+    
+    .highlight {
+      background-color: rgb(53, 181, 169);
+    }
+    
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      height: 100px;
+    }
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      width: 20%;
+      height: 50%;
+    }
+    
+    .navbar .search-input {
+      position: relative;
+      width: 1100px;
+      margin-left: 70px;
+      height: 18px;
+      
+    }
+
+    .logo {
+      width: 135px;
+      height: 68px;
+    }
+    
+    .thumbnail {
+    width: 20%;
+    height: auto;
+    display: inline-block;
+    background-color: black;
+    margin: 10px;
+    color: white;
+    vertical-align: top;
+    /* border: 2px solid white; */
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: left;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    /* display: flex; */
+    flex-wrap: wrap;
+    justify-content: center;
+    
+  }
+
+    .thumbnail:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+
+    .thumbnail::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: skewX(-30deg);
+      transition: transform 0.5s;
+      z-index: 1;
+    }
+
+    .thumbnail:hover::before {
+      transform: skewX(0deg);
+    }
+
+    .thumbnail img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+    .thumbnail .caption {
+      margin-top: 10px;
+    }
+
+    .caption {
+      font-size: 16px;
+      margin-top: 5px;
+    }
+    .no-results {
+    text-align: center;
+    font-weight: bold;
+    color: red;
+    margin-top: 30px;
+    display: none;
+  }
+  .search-clear-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: none;
+  color: #ff2323;
+  cursor: pointer;
+  font-size: 20px; /* Increase the font size */
+  margin-top: 15px;
+  margin-right: 50px;
+}
+@keyframes fade-animation {
+  0% {
+    opacity: 5;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 5;
+  }
+}
+
+.listening-animation {
+  animation: fade-animation 0.4s infinite;
+  animation-direction:normal;
+  transition: ease-out;
+
+}
+
+#microphoneIcon {
+  color: black;
+}
+
+.listening-animation #microphoneIcon {
+  color: red;
+}
+
+
+  </style>
+  
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-links">
+      <a href="{% url 'home_kids' %}" >
+        <img class="logo" src="{% static 'logo/logo.png' %}" alt="Logo">
+      </a>
+      <div class="search-input">
+        <input type="text" id="myInput" oninput="myFunction()" placeholder="Search for movies.." title="Type in a name" style="height:50px; border-radius: 5px;">
+        <i class="fa fa-times search-clear-icon" onclick="clearSearch()"></i>
+        <button class="voice-search-button" id="voiceSearchButton" onclick="startVoiceRecognition()">
+          <i class="fa fa-microphone" id="microphoneIcon" style="display: inline; font-size: 24px;"></i>
+        </button>
+        
+      </div>
+    </div>
+  </nav>
+  <div class="no-results" id="no-results" style="display: none;">No results found.</div>
+  <div class="category" >
+    <center>
+      <div class="thumbnails">
+        {% for video in videos %}
+          <a href="{% url 'movie_details' video.id %}">
+            <div class="thumbnail">
+              <img src="{{ video.thumbnail.url }}" alt="{{ video.title }} Thumbnail">
+              <div class="caption">
+                <center>
+                  <b>{{ video.title }}</b>
+                </center>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+      
+  </center>
+  </div>
+  <script>
+    
+  // Add a variable to track the voice search state
+  let voiceSearchActive = false;
+  
+   function myFunction() {
+    var input, filter, thumbnails, thumbnail, caption, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    thumbnails = document.getElementsByClassName("thumbnail");
+    var noResultsMessage = document.getElementById("no-results");
+    var foundResults = false; // Track if any results are found
+    for (i = 0; i < thumbnails.length; i++) {
+      thumbnail = thumbnails[i];
+      caption = thumbnail.getElementsByClassName("caption")[0];
+      txtValue = caption.textContent || caption.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        thumbnail.style.display = "inline-block";
+        foundResults = true; // Set the flag to true if a result is found
+      } else {
+        thumbnail.style.display = "none";
+      }
+    }
+    if (!foundResults) {
+      noResultsMessage.style.display = "block"; // Display the message if no results are found
+    } else {
+      noResultsMessage.style.display = "none"; // Hide the message if results are found
+    }
+    // Show/hide the clear search icon based on input value
+    var clearIcon = document.querySelector(".search-clear-icon");
+    if (input.value.length > 0) {
+      clearIcon.style.display = "block";
+    } else {
+      clearIcon.style.display = "none";
+    }
+  }
+    function highlightSearchText(text, filter) {
+      var regex = new RegExp("(" + filter + ")", "gi");
+      return text.replace(regex, "<span class='highlight'>$1</span>");
+    }
+    function displayContact(contactName) {
+      var inputBox = document.getElementById("myInput");
+      inputBox.value = contactName;
+    }
+    function searchContacts() {
+      myFunction(); // Call the existing search function
+    }
+    const inputBox = document.getElementById("myInput");
+    inputBox.addEventListener("input", searchContacts); // Call the search function when the input value changes
+  
+ 
+
+  function startVoiceRecognition() {
+  const recognition = new webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  const inputBox = document.getElementById("myInput");
+  const microphoneIcon = document.getElementById("microphoneIcon");
+  const voiceSearchButton = document.getElementById("voiceSearchButton");
+
+  if (!voiceSearchActive) {
+    // Start voice recognition only if not already active
+    voiceSearchActive = true;
+    voiceSearchButton.classList.add("listening-animation");
+    microphoneIcon.classList.add("listening-animation"); // Add this line to apply the animation to the microphone icon
+    recognition.lang = "en-US";
+    recognition.start();
+    inputBox.placeholder = "Listening...";
+
+    // Set a timeout of 5 seconds for the listening functionality
+    const timeout = setTimeout(() => {
+      stopVoiceRecognition();
+      inputBox.placeholder = "Search for movies..";
+    }, 5000);
+    recognition.onresult = function (e) {
+      const result = e.results[0][0].transcript;
+      inputBox.value = result;
+      stopVoiceRecognition();
+      myFunction();
+      inputBox.placeholder = "Search for movies..";
+    };
+    recognition.onerror = function (e) {
+      console.error(e);
+      stopVoiceRecognition();
+      inputBox.placeholder = "Search for movies..";
+    };
+  } else {
+    // If voice search is active, clicking the mic again will refresh the page
+    location.reload();
+  }
+}
+function stopVoiceRecognition() {
+  const recognition = new webkitSpeechRecognition();
+  recognition.stop();
+  voiceSearchActive = false;
+  const microphoneIcon = document.getElementById("microphoneIcon");
+  const voiceSearchButton = document.getElementById("voiceSearchButton");
+  voiceSearchButton.classList.remove("listening-animation");
+  microphoneIcon.classList.remove("listening-animation");
+}
+    function clearSearch() {
+      var inputBox = document.getElementById("myInput");
+      inputBox.value = "";
+      myFunction();
+    }
+    document.addEventListener("keydown", function(event) {
+      // Check if the pressed key is the Esc key (key code 27)
+      if (event.keyCode === 27) {
+        // Use window.history.back() to navigate to the previous page
+        window.history.back();
+      }
+    });
+  </script>
+</body>
+</html>

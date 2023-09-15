@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            color: #fff;
+            z-index: 999;
+            transition: transform 0.3s;
+        }
+
+        .navbar.navbar-hidden {
+            transform: translateY(-100%);
+        }
+
+        .navbar.navbar-visible {
+            transform: translateY(0);
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar li {
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar li a:hover {
+            color: #ff7f50;
+        }
+
+        /* Search bar styles */
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            width: 200px;
+        }
+
+        .search-bar button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 8px;
+            border-radius: 0 4px 4px 0;
+            border: none;
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Login button styles */
+        .login-button {
+            background-color: #555;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: #ff7f50;
+        }
+
+        /* Voice icon styles */
+        .voice-icon {
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        .navbar li {
+            transform: scale(0.7);
+        }
+
+        .navbar.navbar-visible li {
+            transform: scale(1);
+        }
+
+        .navbar li:nth-child(odd) {
+            transition-delay: 0.1s;
+        }
+
+        .navbar.navbar-hidden li:nth-child(odd) {
+            transition-delay: 0s;
+        }
+
+        .navbar li:nth-child(even) {
+            transition-delay: 0.2s;
+        }
+
+        .navbar.navbar-hidden li:nth-child(even) {
+            transition-delay: 0s;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="search-bar">
+                <input type="text" placeholder="Search">
+                <button type="submit">Search</button>
+            </li>
+            <li><button class="login-button">Login</button></li>
+            <li><i class="fas fa-microphone voice-icon"></i></li>
+        </ul>
+    </div>
+
+    <!-- Font Awesome library -->
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Navbar Animation
+        let prevScrollPos = window.pageYOffset;
+        window.onscroll = function() {
+            const currentScrollPos = window.pageYOffset;
+            if (prevScrollPos > currentScrollPos) {
+                document.querySelector('.navbar').classList.add('navbar-visible');
+                document.querySelector('.navbar').classList.remove('navbar-hidden');
+            } else {
+                document.querySelector('.navbar').classList.add('navbar-hidden');
+                document.querySelector('.navbar').classList.remove('navbar-visible');
+            }
+            prevScrollPos = currentScrollPos;
+        };
+    </script>
+</body>
+</html>

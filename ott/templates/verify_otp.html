@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Add your head content here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: black;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px white;
+            animation: fadeIn 0.5s ease-in;
+            text-align: center;
+            width: 450px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Customize button colors */
+        .btn-primary {
+            background-color: orangered;
+            border-color: orangered;
+        }
+
+        .btn-primary:hover {
+            background-color: steelblue;
+            border-color: steelblue;
+        }
+
+        /* Customize alert colors */
+        .alert-danger {
+            background-color: #ff6b6b;
+            color: white;
+            border-color: transparent;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="form-container">
+                    <h2 style="color:white;">Verify OTP</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if error_message %}
+                        <div class="alert alert-danger">{{ error_message }}</div>
+                        {% endif %}
+                        <div class="form-group">
+                            <input type="text" name="otp" class="form-control" placeholder="Enter OTP" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Verify OTP</button>
+                        <a href="{% url 'resend_otp' %}" class="btn btn-secondary">Resend OTP</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

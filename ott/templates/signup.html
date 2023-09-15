@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up-Realm</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="icon" type="image/png" href="https://example.com/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.31
+  /css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: black;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: rgba(248, 248, 248, 0.8); /* Updated: Use rgba with alpha value */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+      font-size: 24px;
+      text-transform: uppercase;
+    }
+
+    form {
+      margin-bottom: 20px;
+      color: whitesmoke;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+    input{
+      color:white;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0;
+      border: none;
+      border-bottom: 1px solid #dddddd;
+      background-color: transparent;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #1b90d8;
+    }
+
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color:orangered;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #116fbf;
+    }
+
+    .container {
+      background: black;
+    }
+
+    .footer {
+            text-align: center;
+            color: wheat;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 20px;
+            margin-top: 70px;
+            width: 100%;
+            background-color: rgb(11, 11, 11);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+
+    .navbar {
+      background-color: black;
+      width: 100%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: flex-start;
+      height: 80px;
+    }
+
+    .navbar-brand {
+      padding: 5px;
+      margin-right: 10px;
+    }
+
+    .navbar-brand img {
+      width: 135px;
+      height: 60px;
+    }
+    
+    /* Custom CSS for error popup */
+    .error-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: red;
+    }
+    
+    .error-popup .modal-content {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 4px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .error-popup .modal-icon {
+      margin-right: 20px;
+    }
+    
+    .error-popup .modal-message {
+      font-weight: bold;
+      color: #000000;
+    }
+  </style>
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'logo/REALM.png'%}" alt="Logo" class="logo">
+    </a>
+  </nav>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="text-center">
+      <p style="color: white;">Already have an account? <a href="{% url 'signin' %}">Sign In</a></p>
+    </div>
+  </div>
+
+  <!-- Error popup -->
+  {% if messages %}
+  <div class="error-popup">
+    <div class="modal-content">
+      <i class="fas fa-exclamation-circle modal-icon"></i>
+      <div class="modal-message">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      <i class="fas fa-times close-icon"></i>
+    </div>
+  </div>
+{% endif %}
+
+<div class="footer" style="margin-top: 12%;">
+  Discover a world of entertainment
+</div>
+  <script>
+      const closeIcon = document.querySelector('.close-icon');
+    const errorPopup = document.querySelector('.error-popup');
+
+    closeIcon.addEventListener('click', () => {
+      errorPopup.style.display = 'none';
+    });
+  </script>
+</body>
+
+</html>

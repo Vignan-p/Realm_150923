@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HLS Video Player</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #videoPlayer {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+
+      /* Style the video controls */
+      #videoPlayer::-webkit-media-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+      }
+
+      /* Style the progress bar */
+      #videoPlayer::-webkit-media-controls-progress-bar {
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="videoPlayer" controls autoplay></video>
+    <script>
+      var video = document.getElementById("videoPlayer");
+      var videoUrl = "{{ video_url }}";
+      console.log(videoUrl);
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoUrl;
+      }
+    </script>
+  </body>
+</html>

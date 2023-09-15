@@ -1,0 +1,8 @@
+{% block content %}
+<h1>Profile Detail</h1>
+<p>Name: {{ profile.name }}</p>
+
+{% if can_edit %}
+<a href="{% url 'edit_profile' profile.id %}">Edit Profile</a>
+{% endif %}
+{% endblock %}

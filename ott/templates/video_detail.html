@@ -1,0 +1,17 @@
+<div class="bgimage">
+    <h1>{{ video.title }}</h1>
+    <div style="margin-left: 100px; width: 700px;">
+        <p>{{ video.description }}</p>
+        <p><span class="subs"><b>Genre: </b></span>{{ video.genres.name }}</p>
+        <a href="{% url 'player' video.id %}">
+            <button>▶ Play Now</button>
+        </a>
+        
+        <!-- Watchlist Button -->
+        
+        <button id="watchlist-button" class="watchlist-button" onclick="toggleWatchlist()">
+            <span id="watchlist-icon">{% if video in user_profile.watchlist.all %}−{% else %}+{% endif %}</span> Watchlist
+        </button>
+    
+    </div>
+</div>
